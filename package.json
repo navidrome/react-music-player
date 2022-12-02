@@ -1,10 +1,10 @@
 {
-  "name": "react-jinke-music-player",
-  "version": "4.24.2",
+  "name": "navidrome-music-player",
+  "version": "4.25.0",
   "description": "Maybe the best beautiful HTML5 responsive player component for react",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "unpkg": "dist/react-jinke-music-player.min.js",
+  "unpkg": "dist/navidrome-music-player.min.js",
   "typings": "index.d.ts",
   "files": [
     "lib",
@@ -70,11 +70,11 @@
   "author": "Jinke.Li <1359518268@qq.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lijinke666/react-music-player"
+    "url": "https://github.com/navidrome/react-music-player"
   },
-  "homepage": "https://lijinke666.github.io/react-music-player",
+  "homepage": "https://www.navidrome.org",
   "bugs": {
-    "url": "https://github.com/lijinke666/react-music-player/issues"
+    "url": "https://github.com/navidrome/react-music-player/issues"
   },
   "license": "MIT",
   "keywords": [
