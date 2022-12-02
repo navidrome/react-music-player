@@ -54,12 +54,7 @@ import {
 } from './config/slider'
 import { THEME } from './config/theme'
 import { VOLUME_FADE } from './config/volumeFade'
-import {
-  DEFAULT_PLAY_INDEX,
-  DEFAULT_VOLUME,
-  DEFAULT_REMOVE_ID,
-  PLAYER_KEY,
-} from './config/player'
+import { DEFAULT_VOLUME, PLAYER_KEY } from './config/player'
 import SORTABLE_CONFIG from './config/sortable'
 import LOCALE_CONFIG from './locale'
 import Lyric from './lyric'
@@ -131,12 +126,11 @@ export default class ReactJkMusicPlayer extends PureComponent {
     isInitAutoPlay: this.props.autoPlay,
     isInitRemember: false,
     loadedProgress: 0,
-    removeId: DEFAULT_REMOVE_ID,
+    removeId: -1,
     isNeedMobileHack: IS_MOBILE,
     audioLyricVisible: false,
     isAutoPlayWhenUserClicked: false,
-    playIndex:
-      this.props.playIndex || this.props.defaultPlayIndex || DEFAULT_PLAY_INDEX,
+    playIndex: this.props.playIndex || this.props.defaultPlayIndex || 0,
     canPlay: false,
     currentVolumeFade: VOLUME_FADE.NONE,
     currentVolumeFadeInterval: undefined,
@@ -722,10 +716,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
     playIndex = this.state.playIndex,
     audioLists = this.state.audioLists,
   ) => {
-    return Math.max(
-      DEFAULT_PLAY_INDEX,
-      Math.min(audioLists.length - 1, playIndex),
-    )
+    return Math.max(0, Math.min(audioLists.length - 1, playIndex))
   }
 
   onCoverClick = (mode = MODE.FULL) => {
@@ -1176,7 +1167,6 @@ export default class ReactJkMusicPlayer extends PureComponent {
           lyric: '',
           currentLyric: '',
           loadedProgress: 0,
-          playIndex: DEFAULT_PLAY_INDEX,
         },
         res,
       )
@@ -2073,7 +2063,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
       ? this.getLastPlayStatus()
       : {
           playMode: playMode || PLAY_MODE.order,
-          playIndex: playIndex || DEFAULT_PLAY_INDEX,
+          playIndex: playIndex || 0,
         }
 
     if (theme !== THEME.AUTO) {
@@ -2402,8 +2392,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
       playMode,
       clearPriorAudioLists,
     } = nextProps
-    const isEqualAudioLists = arrayEqual(audioLists)(this.props.audioLists)
-    if (!isEqualAudioLists) {
+    if (!arrayEqual(audioLists)(this.props.audioLists)) {
       if (clearPriorAudioLists) {
         this.changeAudioLists(nextProps)
       } else {
@@ -2414,11 +2403,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
       }
       setTimeout(() => this.initSortableAudioLists(), 200)
     }
-    this.updatePlayIndex(
-      !isEqualAudioLists && clearPriorAudioLists
-        ? DEFAULT_PLAY_INDEX
-        : playIndex,
-    )
+    this.updatePlayIndex(playIndex)
     this.updateTheme(theme)
     this.updateMode(mode)
     this.updatePlayMode(playMode)

@@ -1855,28 +1855,6 @@ describe('<ReactJkMusicPlayer/>', () => {
     platformGetter.mockRestore()
   })
 
-  it('should reset play index to default value when audio lists changed', async () => {
-    const audioLists = [{ musicSrc: 'y' }]
-    const onPlayIndexChange = jest.fn()
-    const wrapper = mount(
-      <ReactJkMusicPlayer
-        audioLists={[{ musicSrc: 'x' }]}
-        autoPlay={false}
-        defaultPlayIndex={1}
-        clearPriorAudioLists
-        onPlayIndexChange={onPlayIndexChange}
-      />,
-    )
-
-    wrapper.setProps({ audioLists })
-
-    await sleep(200)
-
-    expect(wrapper.state('playIndex')).toEqual(0)
-
-    wrapper.setProps({ audioLists })
-  })
-
   it('should reset current cover rotate deg when playing audio changed', async () => {
     const wrapper = mount(
       <ReactJkMusicPlayer audioLists={[{ musicSrc: 'x' }]} />,
