@@ -2380,6 +2380,9 @@ export default class ReactJkMusicPlayer extends PureComponent {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ isResetCoverRotate: true })
     }
+    if (prevState.lyric !== this.state.lyric) {
+      this.initLyricParser()
+    }
   }
 
   // eslint-disable-next-line camelcase
