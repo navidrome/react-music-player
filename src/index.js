@@ -1338,8 +1338,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
   onAudioPause = () => {
     this.setState({ playing: false })
     this.props.onAudioPause && this.props.onAudioPause(this.getBaseAudioInfo())
-    if (this.state.lyric && this.lyric) {
-      this.lyric.togglePlay()
+    if (this.lyric) {
+      this.lyric.pause()
     }
   }
 
@@ -1546,6 +1546,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
     const { restartCurrentOnPrev } = this.props
     if (restartCurrentOnPrev && this.audio.currentTime > 1) {
       this.audio.currentTime = 0
+      this.initLyricParser()
+      this.lyric.seek(0)
       return
     }
 
@@ -1981,6 +1983,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
   }
 
   initLyricParser = () => {
+    this.removeLyric()
     this.lyric = new Lyric(this.state.lyric, this.onLyricChange)
     this.setState({
       currentLyric: this.lyric.lines[0] && this.lyric.lines[0].text,
