@@ -128,6 +128,14 @@ export default class Lyric {
     }
   }
 
+  pause() {
+    const now = +new Date()
+    if (this.state === STATE_PLAYING) {
+      this.stop()
+      this.pauseStamp = now
+    }
+  }
+
   stop() {
     this.state = STATE_PAUSE
     clearTimeout(this.timer)
