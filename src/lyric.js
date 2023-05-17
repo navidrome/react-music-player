@@ -45,19 +45,18 @@ export default class Lyric {
     const offset = parseInt(this.tags.offset, 10) || 0
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]
-      const result = timeExp.exec(line)
-      if (result) {
-        const txt = line.replace(timeExp, '').trim()
-        if (txt) {
-          this.lines.push({
-            time:
-              result[1] * 60 * 1000 +
-              result[2] * 1000 +
-              (result[3] || 0) * 10 +
-              offset,
-            txt,
-          })
-        }
+      const txt = line.replace(timeExp, '').trim()
+      let result = timeExp.exec(line)
+      while (result) {
+        this.lines.push({
+          time:
+            result[1] * 60 * 1000 +
+            result[2] * 1000 +
+            (result[3] || 0) * 10 +
+            offset,
+          txt,
+        })
+        result = timeExp.exec(line)
       }
     }
 
