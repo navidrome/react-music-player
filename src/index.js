@@ -694,7 +694,11 @@ export default class ReactJkMusicPlayer extends PureComponent {
         {audioLyricVisible && (
           <Draggable>
             <div className={cls('music-player-lyric', lyricClassName)}>
-              {currentLyric || locale.emptyLyricText}
+              {this.state.lyric
+                ? (currentLyric || '')
+                    .split('\n')
+                    .map((s) => <div key={s}>{s}</div>)
+                : locale.emptyLyricText}
             </div>
           </Draggable>
         )}
