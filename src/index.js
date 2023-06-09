@@ -694,7 +694,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
         {audioLyricVisible && (
           <Draggable>
             <div className={cls('music-player-lyric', lyricClassName)}>
-              {currentLyric || locale.emptyLyricText}
+              {this.state.lyric ? currentLyric || '' : locale.emptyLyricText}
             </div>
           </Draggable>
         )}
@@ -1983,7 +1983,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
   initLyricParser = () => {
     this.lyric = new Lyric(this.state.lyric, this.onLyricChange)
     this.setState({
-      currentLyric: this.lyric.lines[0] && this.lyric.lines[0].text,
+      currentLyric: this.lyric.lines[0] && this.lyric.lines[0].txt,
     })
   }
 
