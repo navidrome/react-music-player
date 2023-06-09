@@ -52,7 +52,7 @@ export default class Lyric {
           time:
             result[1] * 60 * 1000 +
             result[2] * 1000 +
-            (result[3] || 0) * 10 +
+            `.${result[3] || '0'}` * 1000 +
             offset,
           txt,
         })
