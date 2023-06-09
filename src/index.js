@@ -915,7 +915,6 @@ export default class ReactJkMusicPlayer extends PureComponent {
     if (audioLists.length < 1) {
       return
     }
-    this.lyric && this.lyric.stop()
     if (!audioId) {
       this.clearAudioLists()
       return
@@ -937,6 +936,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
           }
           // 如果删除的是当前正在播放的 顺延下一首播放
           if (audioId === playId) {
+            this.lyric && this.lyric.stop()
             this.handlePlay(PLAY_MODE.orderLoop)
           }
         },
