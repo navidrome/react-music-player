@@ -30,6 +30,7 @@ exports[`Locale test should render default locale with en_US 1`] = `
         size={26}
       />,
       "empty": <MdLibraryMusic />,
+      "forward": <AnimateForwardIcon />,
       "loading": <FaSpinner />,
       "loop": <MdRepeatOne
         size={26}
@@ -55,6 +56,7 @@ exports[`Locale test should render default locale with en_US 1`] = `
       "reload": <FaSyncAlt
         size={22}
       />,
+      "rewind": <AnimateRewindIcon />,
       "shuffle": <TiArrowShuffle
         size={26}
       />,
@@ -442,6 +444,7 @@ exports[`Locale test should render default locale with en_US 1`] = `
               size={26}
             />,
             "empty": <MdLibraryMusic />,
+            "forward": <AnimateForwardIcon />,
             "loading": <Spin />,
             "loop": <MdRepeatOne
               size={26}
@@ -467,6 +470,7 @@ exports[`Locale test should render default locale with en_US 1`] = `
             "reload": <FaSyncAlt
               size={22}
             />,
+            "rewind": <AnimateRewindIcon />,
             "shuffle": <TiArrowShuffle
               size={26}
             />,
@@ -490,6 +494,7 @@ exports[`Locale test should render default locale with en_US 1`] = `
             "downloadText": "Download",
             "emptyLyricText": "No lyric",
             "emptyText": "No music",
+            "forwardAudioText": "Forward",
             "lightThemeText": "L",
             "loadingText": "Loading",
             "nextTrackText": "Next track",
@@ -504,6 +509,7 @@ exports[`Locale test should render default locale with en_US 1`] = `
             "previousTrackText": "Previous track",
             "reloadText": "Reload",
             "removeAudioListsText": "Delete audio lists",
+            "rewindAudioText": "Rewind",
             "switchThemeText": "Dark/Light mode",
             "toggleLyricText": "Toggle lyric",
             "toggleMiniModeText": "Minimize",
@@ -725,6 +731,7 @@ exports[`Locale test should render locale with zh_CN 1`] = `
         size={26}
       />,
       "empty": <MdLibraryMusic />,
+      "forward": <AnimateForwardIcon />,
       "loading": <FaSpinner />,
       "loop": <MdRepeatOne
         size={26}
@@ -750,6 +757,7 @@ exports[`Locale test should render locale with zh_CN 1`] = `
       "reload": <FaSyncAlt
         size={22}
       />,
+      "rewind": <AnimateRewindIcon />,
       "shuffle": <TiArrowShuffle
         size={26}
       />,
@@ -1302,6 +1310,7 @@ exports[`Locale test should render locale with zh_CN 1`] = `
               size={26}
             />,
             "empty": <MdLibraryMusic />,
+            "forward": <AnimateForwardIcon />,
             "loading": <Spin />,
             "loop": <MdRepeatOne
               size={26}
@@ -1327,6 +1336,7 @@ exports[`Locale test should render locale with zh_CN 1`] = `
             "reload": <FaSyncAlt
               size={22}
             />,
+            "rewind": <AnimateRewindIcon />,
             "shuffle": <TiArrowShuffle
               size={26}
             />,
@@ -1350,6 +1360,7 @@ exports[`Locale test should render locale with zh_CN 1`] = `
             "downloadText": "下载",
             "emptyLyricText": "暂无歌词",
             "emptyText": "音乐播放列表为空",
+            "forwardAudioText": "向前",
             "lightThemeText": "亮",
             "loadingText": "加载中",
             "nextTrackText": "下一首",
@@ -1364,6 +1375,7 @@ exports[`Locale test should render locale with zh_CN 1`] = `
             "previousTrackText": "上一首",
             "reloadText": "重新播放",
             "removeAudioListsText": "清空播放列表",
+            "rewindAudioText": "倒带",
             "switchThemeText": "暗黑/明亮 主题",
             "toggleLyricText": "显示/隐藏 歌词",
             "toggleMiniModeText": "切换至迷你模式",
