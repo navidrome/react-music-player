@@ -23,6 +23,8 @@ const PlayerMobile = ({
   currentPlayModeName,
   extendsContent,
   onPlay,
+  onRewind,
+  onForward,
   glassBg,
   onCoverClick,
   autoHiddenCover,
@@ -88,17 +90,33 @@ const PlayerMobile = ({
       {loading ? (
         <span className="group loading-icon">{icon.loading}</span>
       ) : (
-        <span
-          className="group play-btn"
-          title={
-            shouldShowPlayIcon
-              ? locale.clickToPlayText
-              : locale.clickToPauseText
-          }
-          onClick={onPlay}
-        >
-          {shouldShowPlayIcon ? icon.play : icon.pause}
-        </span>
+        <>
+          <span
+            className="group rewind-btn"
+            title={locale.rewindAudioText}
+            onClick={onRewind}
+          >
+            {icon.rewind}
+          </span>
+          <span
+            className="group play-btn"
+            title={
+              shouldShowPlayIcon
+                ? locale.clickToPlayText
+                : locale.clickToPauseText
+            }
+            onClick={onPlay}
+          >
+            {shouldShowPlayIcon ? icon.play : icon.pause}
+          </span>
+          <span
+            className="group forward-btn"
+            title={locale.forwardAudioText}
+            onClick={onForward}
+          >
+            {icon.forward}
+          </span>
+        </>
       )}
       <span
         className="group next-audio"

@@ -2,6 +2,8 @@ import React from 'react'
 
 import { FaPauseCircle } from '@react-icons/all-files/fa/FaPauseCircle'
 import { FaPlayCircle } from '@react-icons/all-files/fa/FaPlayCircle'
+import { FaForward } from '@react-icons/all-files/fa/FaForward'
+import { FaBackward } from '@react-icons/all-files/fa/FaBackward'
 
 export { FaBook as LyricIcon } from '@react-icons/all-files/fa/FaBook'
 export { FaHeadphones as FaHeadphonesIcon } from '@react-icons/all-files/fa/FaHeadphones'
@@ -28,4 +30,10 @@ export const AnimatePlayIcon = () => (
 )
 export const AnimatePauseIcon = () => (
   <FaPauseCircle className="react-jinke-music-player-pause-icon" />
+)
+export const AnimateForwardIcon = () => (
+  <FaForward className="react-jinke-music-player-pause-icon" />
+)
+export const AnimateRewindIcon = () => (
+  <FaBackward className="react-jinke-music-player-pause-icon" />
 )

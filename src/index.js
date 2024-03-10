@@ -17,6 +17,8 @@ import Sortable, { Swap } from 'sortablejs'
 import AudioListsPanel from './components/AudioListsPanel'
 import CircleProcessBar from './components/CircleProcessBar'
 import {
+  AnimateRewindIcon,
+  AnimateForwardIcon,
   AnimatePauseIcon,
   AnimatePlayIcon,
   ArrowDownIcon,
@@ -93,6 +95,8 @@ const DEFAULT_ICON = {
   loading: <LoadIcon />,
   packUpPanelMobile: <ArrowDownIcon size={26} />,
   empty: <EmptyIcon />,
+  forward: <AnimateForwardIcon />,
+  rewind: <AnimateRewindIcon />,
 }
 
 export default class ReactJkMusicPlayer extends PureComponent {
@@ -496,6 +500,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
             currentTime={formattedCurrentTime}
             progressBar={ProgressBar}
             onPlay={this.onTogglePlay}
+            onRewind={this.onAudioRewind}
+            onForward={this.onAudioForward}
             currentPlayModeName={currentPlayModeName}
             playMode={PlayModeComponent}
             audioNextPlay={this.onPlayNextAudio}
@@ -586,19 +592,35 @@ export default class ReactJkMusicPlayer extends PureComponent {
                         {this.iconMap.loading}
                       </span>
                     ) : (
-                      <span
-                        className="group play-btn"
-                        onClick={this.onTogglePlay}
-                        title={
-                          shouldShowPlayIcon
-                            ? locale.clickToPlayText
-                            : locale.clickToPauseText
-                        }
-                      >
-                        {shouldShowPlayIcon
-                          ? this.iconMap.play
-                          : this.iconMap.pause}
-                      </span>
+                      <>
+                        <span
+                          className="group rewind-btn"
+                          onClick={this.onAudioRewind}
+                          title={locale.rewindAudioText}
+                        >
+                          {this.iconMap.rewind}
+                        </span>
+                        <span
+                          className="group play-btn"
+                          onClick={this.onTogglePlay}
+                          title={
+                            shouldShowPlayIcon
+                              ? locale.clickToPlayText
+                              : locale.clickToPauseText
+                          }
+                        >
+                          {shouldShowPlayIcon
+                            ? this.iconMap.play
+                            : this.iconMap.pause}
+                        </span>
+                        <span
+                          className="group forward-btn"
+                          onClick={this.onAudioForward}
+                          title={locale.forwardAudioText}
+                        >
+                          {this.iconMap.forward}
+                        </span>
+                      </>
                     )}
                     <span
                       className="group next-audio"
@@ -1326,6 +1348,14 @@ export default class ReactJkMusicPlayer extends PureComponent {
       }
       this.loadAndPlayAudio(isLoaded)
     }
+  }
+
+  onAudioForward = () => {
+    this.audio.currentTime += 10
+  }
+
+  onAudioRewind = () => {
+    this.audio.currentTime -= 10
   }
 
   setAudioLoaded = () => {
