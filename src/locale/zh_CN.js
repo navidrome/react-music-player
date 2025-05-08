@@ -7,6 +7,7 @@ export default {
     orderLoop: '列表循环',
     singleLoop: '单曲循环',
     shufflePlay: '随机播放',
+    disableAutoplay: '禁用自动播放',
   },
   openText: '打开',
   closeText: '关闭',

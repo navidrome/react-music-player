@@ -22,6 +22,7 @@ import {
   ArrowDownIcon,
   CloseIcon,
   DeleteIcon,
+  DisableAutoplayIcon,
   DownloadIcon,
   EmptyIcon,
   FaMinusSquareOIcon,
@@ -90,6 +91,7 @@ const DEFAULT_ICON = {
   order: <OrderPlayIcon size={26} />,
   orderLoop: <RepeatIcon size={26} />,
   shuffle: <ShufflePlayIcon size={26} />,
+  disableAutoplay: <DisableAutoplayIcon size={26} />,
   loading: <LoadIcon />,
   packUpPanelMobile: <ArrowDownIcon size={26} />,
   empty: <EmptyIcon />,
@@ -797,6 +799,9 @@ export default class ReactJkMusicPlayer extends PureComponent {
         break
       case PLAY_MODE.shufflePlay:
         IconNode = cloneElement(this.iconMap.shuffle, animateProps)
+        break
+      case PLAY_MODE.disableAutoplay:
+        IconNode = cloneElement(this.iconMap.disableAutoplay, animateProps)
         break
       default:
         IconNode = cloneElement(this.iconMap.order, animateProps)
@@ -1508,6 +1513,12 @@ export default class ReactJkMusicPlayer extends PureComponent {
           this.audioListsPlay(randomPlayId, true)
         }
         break
+
+      // 禁用自动播放
+      case PLAY_MODE.disableAutoplay:
+        this.audio.pause()
+        return
+
       default:
         break
     }

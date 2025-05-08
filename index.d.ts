@@ -28,6 +28,7 @@ export type ReactJkMusicPlayerPlayMode =
   | 'orderLoop'
   | 'singleLoop'
   | 'shufflePlay'
+  | 'disableAutoplay'
 
 export interface ReactJkMusicPlayerAudioListProps {
   name: React.ReactNode
@@ -69,6 +70,7 @@ export interface ReactJkMusicPlayerIcon {
   order?: React.ReactNode
   orderLoop?: React.ReactNode
   shuffle?: React.ReactNode
+  disableAutoplay?: React.ReactNode
   loading?: React.ReactNode
 }
 
@@ -78,6 +80,7 @@ export interface ReactJkMusicPlayerCustomLocale {
     orderLoop: React.ReactNode
     singleLoop: React.ReactNode
     shufflePlay: React.ReactNode
+    disableAutoplay: React.ReactNode
   }
   openText: React.ReactNode
   closeText: React.ReactNode

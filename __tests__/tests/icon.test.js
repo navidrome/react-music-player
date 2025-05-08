@@ -21,6 +21,7 @@ const LoopIcon = () => <div>1</div>
 const OrderIcon = () => <div>1</div>
 const OrderLoopIcon = () => <div>1</div>
 const ShuffleIcon = () => <div>1</div>
+const DisableAutoplayIcon = () => <div>1</div>
 const LoadingIcon = () => <div>1</div>
 const PackUpPanelMobileIcon = () => <div>1</div>
 const EmptyIcon = () => <div>1</div>
@@ -58,6 +59,7 @@ const createPlayer = (props) => (
       order: <OrderIcon />,
       orderLoop: <OrderLoopIcon />,
       shuffle: <ShuffleIcon />,
+      disableAutoplay: <DisableAutoplayIcon />,
       loading: <LoadingIcon />,
       packUpPanelMobile: <PackUpPanelMobileIcon />,
       empty: <EmptyIcon />,

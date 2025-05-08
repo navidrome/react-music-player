@@ -103,7 +103,7 @@ ReactDOM.render(
 | audioLists | `object[]` | `-` | 播放列表 : {name: "YOUR_AUDIO_NAME",singer: "YOUR_AUDIO_SINGER_NAME",cover: "YOUR_AUDIO_COVER",musicSrc: "YOUR_AUDIO_SRC"} |
 | theme | `string` | `dark` | 播放器主题 可选 'light'(白天) 和 'dark'(黑夜) 两种 |
 | defaultPosition | `object` | `{top:0,left:0}` | 当播放器是迷你模式时的初始位 比如 {top:0,left:0} or {top:'20%',left:"20%"} |
-| playModeText | `object` | {order: "order",orderLoop: "orderLoop",singleLoop: "singleLoop",shufflePlay:"shufflePlay"}` | 播放模式对应的文字 |
+| playModeText | `object` | {order: "order",orderLoop: "orderLoop",singleLoop: "singleLoop",shufflePlay: "shufflePlay",disableAutoplay: "disableAutoplay"}` | 播放模式对应的文字 |
 | playModeShowTime | `number` | `600` | 切换播放模式时提示语的显示时间,单位毫秒 |
 | bounds | `object`,`string` | `body` | 拖拽边界 可以是一个具体的字符串,比如 `body`,也可以是具体的值 `left,top,right,bottom` |
 | preload | `boolean`,`string` | `false` | 是否在页面加载后立即加载音频。可选值 `auto | metadata | none` `true | false`如果`preload=true` 默认会 设置 preload="auto" |
@@ -117,7 +117,7 @@ ReactDOM.render(
 | emptyText | `string \| ReactNode` | `no music` | 播放列表为空时显示的文字 |
 | checkedText | `string \| ReactNode` | `-` | 播放器主题开关 选中的文字 |
 | unCheckedText | `string \| ReactNode` | `-` | 播放器主题开关 未选中的文字 |
-| defaultPlayMode | `string` | `order` | 默认的播放模式 可选 `order`,`orderLoop`,`singleLoop`,`shufflePlay` |
+| defaultPlayMode | `string` | `order` | 默认的播放模式 可选 `order`,`orderLoop`,`singleLoop`,`shufflePlay`,`disableAutoplay` |
 | mode | `string` | `mini` | 播放器的默认模式 可选 `mini`,`full` |
 | once | `boolean` | `false` | 在默认情况下 'audioPlay' 函数 会在你 每次暂停后再次播放 触发 , 如果 你只想 让 'audioPlay' 在 音乐初始化播放的时候触发一次,你可以设置 为 `true` |
 | autoPlay | `boolean` | `true` | 是否在加载完成后随即播放音频 |
@@ -348,6 +348,7 @@ export interface ReactJkMusicPlayerProps {
     orderLoop: string | React.ReactNode
     singleLoop: string | React.ReactNode
     shufflePlay: string | React.ReactNode
+    disableAutoplay: string | React.ReactNode
   }
   panelTitle?: string | React.ReactNode
   closeText?: string | React.ReactNode

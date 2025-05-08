@@ -155,5 +155,7 @@ describe('<ReactJkMusicPlayer/> click events tests', () => {
     assert(wrapper.state().playMode === 'singleLoop')
     wrapper.find('.loop-btn').simulate('click')
     assert(wrapper.state().playMode === 'shufflePlay')
+    wrapper.find('.loop-btn').simulate('click')
+    assert(wrapper.state().playMode === 'disableAutoplay')
   })
 })
