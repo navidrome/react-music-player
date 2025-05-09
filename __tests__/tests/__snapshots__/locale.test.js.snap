@@ -26,6 +26,9 @@ exports[`Locale test should render default locale with en_US 1`] = `
         size={24}
       />,
       "destroy": <MdClose />,
+      "disableAutoplay": <MdDoNotDisturb
+        size={26}
+      />,
       "download": <TiDownload
         size={26}
       />,
@@ -438,6 +441,9 @@ exports[`Locale test should render default locale with en_US 1`] = `
               size={24}
             />,
             "destroy": <MdClose />,
+            "disableAutoplay": <MdDoNotDisturb
+              size={26}
+            />,
             "download": <TiDownload
               size={26}
             />,
@@ -500,6 +506,7 @@ exports[`Locale test should render default locale with en_US 1`] = `
               "orderLoop": "List loop",
               "shufflePlay": "Shuffle playback",
               "singleLoop": "Single loop",
+              "disableAutoplay": "Disable autoplay",
             },
             "previousTrackText": "Previous track",
             "reloadText": "Reload",
@@ -721,6 +728,9 @@ exports[`Locale test should render locale with zh_CN 1`] = `
         size={24}
       />,
       "destroy": <MdClose />,
+      "disableAutoplay": <MdDoNotDisturb
+        size={26}
+      />,
       "download": <TiDownload
         size={26}
       />,
@@ -1298,6 +1308,9 @@ exports[`Locale test should render locale with zh_CN 1`] = `
               size={24}
             />,
             "destroy": <MdClose />,
+            "disableAutoplay": <MdDoNotDisturb
+              size={26}
+            />,
             "download": <TiDownload
               size={26}
             />,
@@ -1360,6 +1373,7 @@ exports[`Locale test should render locale with zh_CN 1`] = `
               "orderLoop": "列表循环",
               "shufflePlay": "随机播放",
               "singleLoop": "单曲循环",
+              "disableAutoplay": "禁用自动播放",
             },
             "previousTrackText": "上一首",
             "reloadText": "重新播放",

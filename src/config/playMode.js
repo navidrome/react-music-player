@@ -3,4 +3,5 @@ export default {
   orderLoop: 'orderLoop',
   singleLoop: 'singleLoop',
   shufflePlay: 'shufflePlay',
+  disableAutoplay: 'disableAutoplay',
 }

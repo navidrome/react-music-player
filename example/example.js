@@ -166,7 +166,7 @@ const options = {
   },
 
   // if you want dynamic change current play mode you can change it
-  // [type`order | orderLoop | singleLoop | shufflePlay`, default `order`]
+  // [type`order | orderLoop | singleLoop | shufflePlay | disableAutoplay`, default `order`]
   // playMode: 'order',
   defaultPlayMode: 'order',
 

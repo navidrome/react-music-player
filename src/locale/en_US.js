@@ -7,6 +7,7 @@ export default {
     orderLoop: 'List loop',
     singleLoop: 'Single loop',
     shufflePlay: 'Shuffle playback',
+    disableAutoplay: 'Disable autoplay',
   },
   openText: 'Open',
   closeText: 'Close',

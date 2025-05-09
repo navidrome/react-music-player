@@ -8,6 +8,7 @@ const playModePropTypes = PropTypes.oneOf([
   'orderLoop',
   'singleLoop',
   'shufflePlay',
+  'disableAutoplay',
 ])
 
 export default {
