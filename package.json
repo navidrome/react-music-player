@@ -192,5 +192,8 @@
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
+  },
+  "resolutions": {
+    "esbuild": "0.14.54"
   }
 }
