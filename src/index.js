@@ -221,6 +221,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
   }
 
   get iconMap() {
+    // eslint-disable-next-line react/no-this-in-sfc
     const Spin = () => (
       <span className="loading group">{this.props.icon.loading}</span>
     )
@@ -1743,12 +1744,18 @@ export default class ReactJkMusicPlayer extends PureComponent {
     if (!nextProps.quietUpdate || !Array.isArray(nextProps.audioLists)) {
       return false
     }
+  // Find the currently playing audio in the internal list to get its uuid
+    const currentAudio =
+      this.state.audioLists &&
+      this.state.audioLists.find((a) => a[PLAYER_KEY] === playId)
+    const currentUuid = currentAudio && currentAudio.uuid
     return (
       playId &&
       nextProps.audioLists.some(
         (newAudioInfo) =>
           newAudioInfo[PLAYER_KEY] === playId ||
-          newAudioInfo.musicSrc === musicSrc,
+          newAudioInfo.musicSrc === musicSrc ||
+          (currentUuid && newAudioInfo.uuid === currentUuid),
       )
     )
   }
@@ -1882,7 +1889,9 @@ export default class ReactJkMusicPlayer extends PureComponent {
       const prevAudioBeforeUpdate =
         (nextProps.quietUpdate &&
           this.state.audioLists.find(
-            ({ musicSrc }) => musicSrc === info.musicSrc,
+            (prev) =>
+              prev.musicSrc === info.musicSrc ||
+              (info.uuid && prev.uuid === info.uuid),
           )) ||
         {}
       return {
@@ -2103,9 +2112,23 @@ export default class ReactJkMusicPlayer extends PureComponent {
   }
 
   changeAudioLists = (nextProps) => {
-    if (!this.checkCurrentPlayingAudioIsInUpdatedAudioLists(nextProps)) {
-      this.resetAudioStatus()
+    // When quietUpdate is enabled and the currently playing track exists
+    // in the updated list, just replace the audioLists state without
+    // resetting playback. This avoids restarting the current track when
+    // the queue is reordered (e.g. "Play Next").
+    if (this.checkCurrentPlayingAudioIsInUpdatedAudioLists(nextProps)) {
+      const info = this.getPlayInfoOfNewList(nextProps)
+      this.setState({ audioLists: info.audioLists })
+      this.props.onAudioListsChange &&
+        this.props.onAudioListsChange(
+          this.state.playId,
+          nextProps.audioLists,
+          this.getBaseAudioInfo(),
+        )
+      return
     }
+
+    this.resetAudioStatus()
     this.resetPlayId().then(() => {
       this.loadNewAudioLists(nextProps)
       this.props.onAudioListsChange &&
