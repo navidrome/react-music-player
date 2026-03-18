@@ -43,6 +43,7 @@ export default class Lyric {
   _initLines() {
     const lines = this.lrc.split('\n')
     const offset = parseInt(this.tags.offset, 10) || 0
+    let lineCount = 0
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]
       const result = timeExp.exec(line)
@@ -56,14 +57,26 @@ export default class Lyric {
               (result[3] || 0) * 10 +
               offset,
             txt,
+            num: lineCount++,
           })
         }
       }
     }
 
     this.lines.sort((a, b) => {
-      return a.time - b.time
+      const cp = a.time - b.time
+      if (cp === 0.0) {
+        return a.num - b.num
+      }
+      return cp
     })
+    
+    for (let i = this.lines.length - 2; i >= 0; i--) {
+      if (this.lines[i].time === this.lines[i + 1].time) {
+        this.lines[i].txt += `\n${this.lines[i + 1].txt}`
+        this.lines.splice(i + 1, 1)
+      }
+    }
   }
 
   _findCurNum(time) {
