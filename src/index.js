@@ -2079,8 +2079,28 @@ export default class ReactJkMusicPlayer extends PureComponent {
       lastPlayStatus.theme = theme
     }
 
+    // When a brand-new list is loaded, the initial track must come from the
+    // requested playIndex (lastPlayStatus.playIndex), not from getPlayId's
+    // fallback to the stale internal this.state.playIndex. Otherwise the player
+    // briefly loads the track that sat at the previous index in the new list
+    // before updatePlayIndex corrects it, producing a transient jump to a
+    // "wrong" song. Re-derive the track fields from the intended index.
+    const requestedAudio = info.audioLists[lastPlayStatus.playIndex]
+    const initialInfo =
+      requestedAudio && requestedAudio[PLAYER_KEY] !== info.playId
+        ? {
+            ...info,
+            playId: requestedAudio[PLAYER_KEY],
+            name: requestedAudio.name || '',
+            cover: requestedAudio.cover || '',
+            singer: requestedAudio.singer || '',
+            musicSrc: requestedAudio.musicSrc || '',
+            lyric: requestedAudio.lyric || '',
+          }
+        : info
+
     const audioInfo = {
-      ...info,
+      ...initialInfo,
       ...lastPlayStatus,
       isInitAutoPlay: autoPlayInitLoadPlayList,
       playing: this.isAudioCanPlay,
@@ -2091,9 +2111,9 @@ export default class ReactJkMusicPlayer extends PureComponent {
       return
     }
 
-    switch (typeof info.musicSrc) {
+    switch (typeof initialInfo.musicSrc) {
       case 'function':
-        info.musicSrc().then((musicSrc) => {
+        initialInfo.musicSrc().then((musicSrc) => {
           this.setState({
             ...audioInfo,
             musicSrc,
