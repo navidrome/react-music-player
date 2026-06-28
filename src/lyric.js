@@ -21,6 +21,8 @@ export default class Lyric {
     this.handler = handler
     this.state = STATE_PAUSE
     this.curLine = 0
+    // Sentinel distinct from -1 so the first update() always emits.
+    this._lastActive = -2
 
     this._init()
   }
@@ -135,5 +137,37 @@ export default class Lyric {
 
   seek(offset) {
     this.play(offset)
+  }
+
+  // Position the lyric purely from an externally supplied time (the audio
+  // element's real currentTime), independent of any setTimeout clock. Called on
+  // every timeupdate so the display self-corrects after seeks and buffering.
+  // Emits an empty line before the first lyric so stale text is never left on
+  // screen. Only fires the handler when the active line actually changes.
+  update(timeMs) {
+    if (!this.lines.length) {
+      return
+    }
+    let lo = 0
+    let hi = this.lines.length - 1
+    let active = -1
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2)
+      if (this.lines[mid].time <= timeMs) {
+        active = mid
+        lo = mid + 1
+      } else {
+        hi = mid - 1
+      }
+    }
+    if (active === this._lastActive) {
+      return
+    }
+    this._lastActive = active
+    if (active < 0) {
+      this.handler({ txt: '', lineNum: -1 })
+    } else {
+      this.handler({ txt: this.lines[active].txt, lineNum: active })
+    }
   }
 }

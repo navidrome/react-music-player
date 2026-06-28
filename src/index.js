@@ -296,6 +296,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
       loadedProgress,
       audioLists,
       removeId,
+      lyric,
       currentLyric,
       audioLyricVisible,
       isPlayDestroyed,
@@ -695,7 +696,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
         {audioLyricVisible && (
           <Draggable>
             <div className={cls('music-player-lyric', lyricClassName)}>
-              {currentLyric || locale.emptyLyricText}
+              {currentLyric || (lyric ? '♪' : locale.emptyLyricText)}
             </div>
           </Draggable>
         )}
@@ -1339,9 +1340,6 @@ export default class ReactJkMusicPlayer extends PureComponent {
   onAudioPause = () => {
     this.setState({ playing: false })
     this.props.onAudioPause && this.props.onAudioPause(this.getBaseAudioInfo())
-    if (this.state.lyric && this.lyric) {
-      this.lyric.togglePlay()
-    }
   }
 
   onAudioPlay = () => {
@@ -1351,9 +1349,6 @@ export default class ReactJkMusicPlayer extends PureComponent {
     }
     this.setState({ playing: true, loading: false })
     this.props.onAudioPlay && this.props.onAudioPlay(this.getBaseAudioInfo())
-    if (this.state.lyric && this.lyric) {
-      this.lyric.togglePlay()
-    }
   }
 
   onSetAudioLoadedProgress = () => {
@@ -1560,6 +1555,10 @@ export default class ReactJkMusicPlayer extends PureComponent {
   audioTimeUpdate = () => {
     const { currentTime } = this.audio
     this.setState({ currentTime })
+    // Drive the lyric position from the audio's real clock. This is the single
+    // source of truth, so the display self-corrects after seeks and buffering
+    // instead of drifting on the parser's own setTimeout clock.
+    this.lyric && this.lyric.update(currentTime * 1000)
     if (this.props.remember) {
       this.saveLastPlayStatus()
     }
@@ -1594,6 +1593,9 @@ export default class ReactJkMusicPlayer extends PureComponent {
     if (this.audio) {
       this.audio.currentTime = currentTime
     }
+    // Reposition the lyric while scrubbing: timeupdate does not fire when the
+    // audio is paused, so without this the panel would freeze on the old line.
+    this.lyric && this.lyric.update(currentTime * 1000)
     this.setState({ currentTime, isAudioSeeking: true })
   }
 
@@ -1602,14 +1604,12 @@ export default class ReactJkMusicPlayer extends PureComponent {
     if (!this.state.audioLists.length) {
       return
     }
-    this.lyric && this.lyric.seek(currentTime * 1000)
-
-    if (!this.state.playing) {
-      this.lyric && this.lyric.stop()
-    }
     if (this.audio) {
       this.audio.currentTime = currentTime
     }
+    // Reposition the lyric to the seek target now. While playing, the next
+    // timeupdate would also do this, but timeupdate does not fire while paused.
+    this.lyric && this.lyric.update(currentTime * 1000)
 
     this.props.onAudioSeeked &&
       this.props.onAudioSeeked(this.getBaseAudioInfo())
@@ -1990,10 +1990,17 @@ export default class ReactJkMusicPlayer extends PureComponent {
   }
 
   initLyricParser = () => {
+    // Stop any previous parser before replacing it. Otherwise its setTimeout
+    // chain keeps firing onLyricChange after this.lyric is overwritten, so
+    // rapid track changes leave orphaned parsers writing the previous song's
+    // lines into the shared currentLyric (navidrome #5661).
+    this.lyric && this.lyric.stop()
     this.lyric = new Lyric(this.state.lyric, this.onLyricChange)
-    this.setState({
-      currentLyric: this.lyric.lines[0] && this.lyric.lines[0].text,
-    })
+    // Start empty, then let the parser pick the line for the current position
+    // (empty before the first line). Seeding lines[0] unconditionally would show
+    // a line that isn't active yet when loaded paused or re-inited mid-playback.
+    this.setState({ currentLyric: '' })
+    this.lyric.update((this.audio ? this.audio.currentTime : 0) * 1000)
   }
 
   onLyricChange = ({ lineNum, txt }) => {
