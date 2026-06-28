@@ -1996,9 +1996,11 @@ export default class ReactJkMusicPlayer extends PureComponent {
     // lines into the shared currentLyric (navidrome #5661).
     this.lyric && this.lyric.stop()
     this.lyric = new Lyric(this.state.lyric, this.onLyricChange)
-    this.setState({
-      currentLyric: this.lyric.lines[0] && this.lyric.lines[0].txt,
-    })
+    // Start empty, then let the parser pick the line for the current position
+    // (empty before the first line). Seeding lines[0] unconditionally would show
+    // a line that isn't active yet when loaded paused or re-inited mid-playback.
+    this.setState({ currentLyric: '' })
+    this.lyric.update((this.audio ? this.audio.currentTime : 0) * 1000)
   }
 
   onLyricChange = ({ lineNum, txt }) => {
