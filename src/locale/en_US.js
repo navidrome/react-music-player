@@ -15,6 +15,8 @@ export default {
   clickToPauseText: 'Click to pause',
   nextTrackText: 'Next track',
   previousTrackText: 'Previous track',
+  rewindAudioText: 'Rewind',
+  forwardAudioText: 'Forward',
   reloadText: 'Reload',
   volumeText: 'Volume',
   playListsText: 'Playlists',

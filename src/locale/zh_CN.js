@@ -15,6 +15,8 @@ export default {
   clickToPauseText: '点击暂停',
   nextTrackText: '下一首',
   previousTrackText: '上一首',
+  rewindAudioText: '倒带',
+  forwardAudioText: '向前',
   reloadText: '重新播放',
   volumeText: '音量',
   playListsText: '播放列表',
