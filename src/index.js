@@ -1222,7 +1222,8 @@ export default class ReactJkMusicPlayer extends PureComponent {
     }
   }
 
-  onTogglePlay = () => {
+  // Media Session handlers are called with { action: 'play' | 'pause' }
+  onTogglePlay = ({ action } = {}) => {
     this.setState({ isAudioSeeking: false })
     if (this.state.audioLists.length >= 1) {
       const { fadeIn, fadeOut } = this.props.volumeFade || {}
@@ -1230,6 +1231,16 @@ export default class ReactJkMusicPlayer extends PureComponent {
       const isCurrentlyFading =
         currentVolumeFade === VOLUME_FADE.IN ||
         currentVolumeFade === VOLUME_FADE.OUT
+      // Currently playing track or in the middle of fading in
+      const isPlaying =
+        (!isCurrentlyFading && this.state.playing) ||
+        currentVolumeFade === VOLUME_FADE.IN
+
+      // Ignore an OS play/pause that matches the current state, e.g. the
+      // "pause" sent when a call starts must not resume a paused player
+      if (action === (isPlaying ? 'play' : 'pause')) {
+        return
+      }
 
       /**
        * Currently in middle of fading in/out, so need to cancel the current interval and do the opposite action.
@@ -1244,11 +1255,7 @@ export default class ReactJkMusicPlayer extends PureComponent {
         })
       }
 
-      // Currently playing track or in the middle of fading in
-      if (
-        (!isCurrentlyFading && this.state.playing) ||
-        currentVolumeFade === VOLUME_FADE.IN
-      ) {
+      if (isPlaying) {
         this.setState({ currentVolumeFade: VOLUME_FADE.OUT })
         // Fade in from current volume to 0
         const {
