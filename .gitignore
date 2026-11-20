@@ -12,3 +12,5 @@ coverage
 example/dist
 .vscode
 main.js
+.yarn
+.yarnrc.yml
